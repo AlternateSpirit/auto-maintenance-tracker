@@ -1,0 +1,7 @@
+This project is an auto maintenance program that lets you add and manage your vehicles to keep track of your vehicle's health. It will also give reminders for basic things like fluid
+changes and tires, and let you upload pictures and receipts.
+
+This project will use these languages and technologies:
+FRONTEND - React, Typescript, Vite
+BACKEND - Node.js, Express
+DATABASE - PostgreSQL
