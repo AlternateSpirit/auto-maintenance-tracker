@@ -1,15 +1,20 @@
 import { useState } from 'react'
+import Home from './components/home'
+import './App.css'
 
 type ServiceEntry = {
   vehicle: string
   mileage: string
   service: string
+  cost: string
 }
 
 function App() {
   const [vehicle, setVehicle] = useState('')
   const [mileage, setMileage] = useState('')
   const [service, setService] = useState('')
+  const [cost, setCost] = useState('')
+
 
   const [entries, setEntries] = useState<ServiceEntry[]>([])
 
@@ -20,6 +25,7 @@ function App() {
       vehicle,
       mileage,
       service,
+      cost,
     }
 
     setEntries([...entries, newEntry])
@@ -27,6 +33,13 @@ function App() {
     setVehicle('')
     setMileage('')
     setService('')
+    setCost('')
+  }
+
+  function deleteEntry(indexToDelete: number) {
+    setEntries(
+      entries.filter((_, index) => index !== indexToDelete)
+    )
   }
 
   return (
@@ -54,9 +67,16 @@ function App() {
             onChange={(event) => setService(event.target.value)}
           />
 
+          <input
+            placeholder="Cost"
+            value={cost}
+            onChange={(event) => setCost(event.target.value)}
+          />
+
           <button type="submit">Add Entry</button>
         </form>
       </section>
+
       <section className="card">
         <h2>Service History</h2>
 
@@ -65,6 +85,10 @@ function App() {
             <h3>{entry.vehicle}</h3>
             <p>Mileage: {entry.mileage}</p>
             <p>Service: {entry.service}</p>
+            <p>Cost: {entry.cost}</p>
+            <button onClick={() => deleteEntry(index)}>
+              Delete
+            </button>
           </div>
         ))}
       </section>
