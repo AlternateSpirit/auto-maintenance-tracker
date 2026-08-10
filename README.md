@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# Garage Log 🚗
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Garage Log is a web-based automotive maintenance tracker designed to make it easy to record, organize, and review vehicle service history.
 
-Currently, two official plugins are available:
+The project is currently in active development and is being built as a full-stack portfolio project.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+### Currently Implemented
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Add vehicle service records
+- Track service mileage
+- Track maintenance costs
+- Delete service records
+- Multi-page navigation
+- Responsive dashboard-style interface
 
-## Expanding the ESLint configuration
+### Planned
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Multiple vehicle profiles
+- Individual service histories for each vehicle
+- Vehicle photos and gallery
+- Maintenance history filtering
+- Upcoming maintenance tracking
+- Service reminders
+- Persistent data storage
+- Improved responsive/mobile interface
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- React
+- TypeScript
+- Vite
+- CSS
+- Git / GitHub
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Additional backend and database technologies will be added as development progresses.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Project Goals
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Garage Log is designed around a simple idea: vehicle maintenance records should be quick to enter and easy to find later.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+The application will allow users to maintain a virtual garage containing their vehicles, record maintenance and repairs, track costs and mileage, and view the complete service history of an individual vehicle.
+
+This project is also being developed to explore modern React application architecture, including reusable components, state management, navigation, and eventually persistent backend data.
+
+## Getting Started
+
+Clone the repository:
+
+```bash
+git clone <https://github.com/AlternateSpirit/auto-maintenance-tracker>
