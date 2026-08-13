@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import Home from './components/home'
+import Home from './components/Home'
+import Garage from './components/Garage'
 import './App.css'
+
 
 type ServiceEntry = {
   vehicle: string
@@ -9,14 +11,37 @@ type ServiceEntry = {
   cost: string
 }
 
+export type Vehicle = {
+  id: number
+  year: number
+  make: string
+  model: string
+  mileage: number
+}
+
 function App() {
   const [vehicle, setVehicle] = useState('')
   const [mileage, setMileage] = useState('')
   const [service, setService] = useState('')
   const [cost, setCost] = useState('')
-
-
+  const [currentPage, setCurrentPage] = useState('home')
   const [entries, setEntries] = useState<ServiceEntry[]>([])
+
+  const [year, setYear] = useState('')
+  const [make, setMake] = useState('')
+  const [model, setModel] = useState('')
+  const [vehicleMileage, setVehicleMileage] = useState('')
+
+  const [vehicles, setVehicles] = useState<Vehicle[]>([
+    {
+      id: 1,
+      year: 2017,
+      make: 'Subaru',
+      model: 'WRX',
+      mileage: 75000
+    }
+  ])
+
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -36,6 +61,27 @@ function App() {
     setCost('')
   }
 
+  function addVehicle(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const newVehicle: Vehicle = {
+      id: Date.now(),
+      year: Number(year), 
+      make,
+      model,
+      mileage: Number(vehicleMileage),
+    }
+
+    //recreate the array, adding the new entry and set state
+    setVehicles([...vehicles, newVehicle])
+
+    //this resets each field to ''
+    setYear('')
+    setMake('')
+    setModel('')
+    setVehicleMileage('')
+  }
+
   function deleteEntry(indexToDelete: number) {
     setEntries(
       entries.filter((_, index) => index !== indexToDelete)
@@ -43,55 +89,46 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <h1>Garage Log</h1>
+    <div>
+      {currentPage === 'home' && (
+        <Home
+          title="Garage"
+          vehicle={vehicle}
+          mileage={mileage}
+          service={service}
+          cost={cost}
+          setVehicle={setVehicle}
+          setMileage={setMileage}
+          setService={setService}
+          setCost={setCost}
+          handleSubmit={handleSubmit}
+        />
+      )}
 
-      <h2>Add Service Entry</h2>
-      <section className="card">
-        <form onSubmit={handleSubmit}>
-          <input
-            placeholder="Vehicle Name"
-            value={vehicle}
-            onChange={(event) => setVehicle(event.target.value)}
-          />
+      {currentPage === 'history' && <h1>Service History</h1>}
 
-          <input
-            placeholder="Mileage"
-            value={mileage}
-            onChange={(event) => setMileage(event.target.value)}
-          />
+      {currentPage === 'garage' && (<Garage 
+        vehicles={vehicles} 
+        year={year}
+        make={make}
+        model={model}
+        vehicleMileage={vehicleMileage}
+        setYear={setYear}
+        setMake={setMake}
+        setModel={setModel}
+        setVehicleMileage={setVehicleMileage}
+        addVehicle={addVehicle}
+        />
+      )}
 
-          <input
-            placeholder="Service Performed"
-            value={service}
-            onChange={(event) => setService(event.target.value)}
-          />
+      {currentPage === 'settings' && <h1>Settings</h1>}
 
-          <input
-            placeholder="Cost"
-            value={cost}
-            onChange={(event) => setCost(event.target.value)}
-          />
-
-          <button type="submit">Add Entry</button>
-        </form>
-      </section>
-
-      <section className="card">
-        <h2>Service History</h2>
-
-        {entries.map((entry, index) => (
-          <div key={index}>
-            <h3>{entry.vehicle}</h3>
-            <p>Mileage: {entry.mileage}</p>
-            <p>Service: {entry.service}</p>
-            <p>Cost: {entry.cost}</p>
-            <button onClick={() => deleteEntry(index)}>
-              Delete
-            </button>
-          </div>
-        ))}
-      </section>
+      <nav>
+        <button onClick={() => setCurrentPage('home')}>Home</button>
+        <button onClick={() => setCurrentPage('history')}>History</button>
+        <button onClick={() => setCurrentPage('garage')}>Garage</button>
+        <button onClick={() => setCurrentPage('settings')}>Settings</button>
+      </nav>
     </div>
   )
 }
