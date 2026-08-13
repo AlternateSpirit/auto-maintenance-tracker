@@ -10,7 +10,7 @@ type GarageProps = {
     setMake: (value: string) => void
     setModel: (value: string) => void
     setVehicleMileage: (value: string) => void
-    addVehicle: (event: React.FormEvent<HTMLFormElement>) => void
+    addVehicle: (event: React.SubmitEvent<HTMLFormElement>) => void
 }
 
 function Garage({ 

@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import Home from './components/Home'
 import Garage from './components/Garage'
+import History from './components/History'
 import './App.css'
 
 
-type ServiceEntry = {
+export type ServiceEntry = {
   vehicle: string
   mileage: string
   service: string
@@ -43,7 +44,7 @@ function App() {
   ])
 
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const newEntry: ServiceEntry = {
@@ -61,7 +62,7 @@ function App() {
     setCost('')
   }
 
-  function addVehicle(event: React.FormEvent<HTMLFormElement>) {
+  function addVehicle(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const newVehicle: Vehicle = {
@@ -105,7 +106,11 @@ function App() {
         />
       )}
 
-      {currentPage === 'history' && <h1>Service History</h1>}
+      {currentPage === 'history' && (<History 
+        entries={entries}
+        deleteEntry={deleteEntry}
+        />
+      )}
 
       {currentPage === 'garage' && (<Garage 
         vehicles={vehicles} 

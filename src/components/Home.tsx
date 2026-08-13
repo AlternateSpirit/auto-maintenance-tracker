@@ -8,7 +8,7 @@ type HomeProps = {
   setMileage: (value: string) => void
   setService: (value: string) => void
   setCost: (value: string) => void
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
+  handleSubmit: (event: React.SubmitEvent<HTMLFormElement>) => void
 }
 
 function Home({
