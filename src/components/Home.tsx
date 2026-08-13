@@ -29,11 +29,11 @@ function Home({
       <p>Track your vehicle maintenance in one place.</p>
 
       <section className="card">
-        <h2>Add Service Entry</h2>
+        <h2>Want to add a service done?</h2>
 
         <form onSubmit={handleSubmit}>
           <input
-            placeholder="Vehicle Name"
+            placeholder="Make & model"
             value={vehicle}
             onChange={(event) => setVehicle(event.target.value)}
           />

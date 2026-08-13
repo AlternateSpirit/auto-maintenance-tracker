@@ -11,6 +11,7 @@ type GarageProps = {
     setModel: (value: string) => void
     setVehicleMileage: (value: string) => void
     addVehicle: (event: React.SubmitEvent<HTMLFormElement>) => void
+    deleteVehicle: (idToDelete: number) => void
 }
 
 function Garage({ 
@@ -23,7 +24,8 @@ function Garage({
     setMake, 
     setModel, 
     setVehicleMileage,
-    addVehicle
+    addVehicle,
+    deleteVehicle
 
 }: GarageProps) { 
     return (
@@ -69,6 +71,7 @@ function Garage({
                             {vehicle.year} {vehicle.make} {vehicle.model}
                         </h2>
                         <p>{vehicle.mileage} miles</p>
+                        <button onClick={() => deleteVehicle(vehicle.id)}>Delete Vehicle</button>
                     </div>
                 ))}    
             </section>

@@ -89,11 +89,17 @@ function App() {
     )
   }
 
+  function deleteVehicle(idToDelete: number) {
+    setVehicles(
+      vehicles.filter((vehicle) => vehicle.id !== idToDelete)
+    )
+  }
+
   return (
-    <div>
+    <div className="app-shell">
       {currentPage === 'home' && (
         <Home
-          title="Garage"
+          title="The Garage"
           vehicle={vehicle}
           mileage={mileage}
           service={service}
@@ -123,16 +129,17 @@ function App() {
         setModel={setModel}
         setVehicleMileage={setVehicleMileage}
         addVehicle={addVehicle}
+        deleteVehicle={deleteVehicle}
         />
       )}
 
       {currentPage === 'settings' && <h1>Settings</h1>}
 
       <nav>
-        <button onClick={() => setCurrentPage('home')}>Home</button>
-        <button onClick={() => setCurrentPage('history')}>History</button>
-        <button onClick={() => setCurrentPage('garage')}>Garage</button>
-        <button onClick={() => setCurrentPage('settings')}>Settings</button>
+        <button className={currentPage === 'home' ? 'active' : ' '}onClick={() => setCurrentPage('home')}>Home</button>
+        <button className={currentPage === 'history' ? 'active' : ' '}onClick={() => setCurrentPage('history')}>History</button>
+        <button className={currentPage === 'garage' ? 'active' : ' '}onClick={() => setCurrentPage('garage')}>Garage</button>
+        <button className={currentPage === 'settings' ? 'active' : ' '}onClick={() => setCurrentPage('settings')}>Settings</button>
       </nav>
     </div>
   )
