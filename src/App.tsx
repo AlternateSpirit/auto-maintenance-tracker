@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Home from './components/Home'
 import Garage from './components/Garage'
 import History from './components/History'
+import VehicleDetails from './components/VehicleDetails'
 import './App.css'
 
 
@@ -27,11 +28,11 @@ function App() {
   const [cost, setCost] = useState('')
   const [currentPage, setCurrentPage] = useState('home')
   const [entries, setEntries] = useState<ServiceEntry[]>([])
-
   const [year, setYear] = useState('')
   const [make, setMake] = useState('')
   const [model, setModel] = useState('')
   const [vehicleMileage, setVehicleMileage] = useState('')
+  const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(null)
 
   const [vehicles, setVehicles] = useState<Vehicle[]>([
     {
@@ -43,6 +44,9 @@ function App() {
     }
   ])
 
+  const selectedVehicle = vehicles.find(
+    (vehicle) => vehicle.id === selectedVehicleId
+  )
 
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -95,6 +99,15 @@ function App() {
     )
   }
 
+  function openVehicle(vehicleId: number) {
+    setSelectedVehicleId(vehicleId)
+    setCurrentPage('vehicle')
+  }
+
+  function closeVehicle() {
+    setCurrentPage('garage')
+  }
+
   return (
     <div className="app-shell">
       {currentPage === 'home' && (
@@ -130,6 +143,14 @@ function App() {
         setVehicleMileage={setVehicleMileage}
         addVehicle={addVehicle}
         deleteVehicle={deleteVehicle}
+        openVehicle={openVehicle}
+        />
+      )}
+
+      {currentPage === 'vehicle' && selectedVehicle && (
+        <VehicleDetails 
+        vehicle={selectedVehicle} 
+        closeVehicle={closeVehicle}
         />
       )}
 

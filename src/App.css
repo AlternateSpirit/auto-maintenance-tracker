@@ -103,11 +103,18 @@ button {
   color: #20242b;
   font-weight: 700;
   background: #f4c542;
-  border: 0;
+  border: none;
   border-radius: 10px;
   transition:
     background 150ms ease,
     transform 150ms ease;
+}
+
+.vehicle-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
 }
 
 button:hover {
