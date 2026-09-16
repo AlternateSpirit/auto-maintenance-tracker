@@ -6,7 +6,11 @@ type HistoryProps = {
   deleteEntry: (index: number) => void
 }
 
-function History({entries, deleteEntry, vehicles}: HistoryProps) {
+function History({
+  entries, 
+  deleteEntry, 
+  vehicles
+}: HistoryProps) {
   function getVehicleName(vehicleId: number) {
     const matchingVehicle = vehicles.find(
       (vehicle) => vehicle.id === vehicleId
@@ -25,13 +29,13 @@ function History({entries, deleteEntry, vehicles}: HistoryProps) {
 
       <section className="card">
         <h2>Maintenance Records</h2>
-        {entries.map((entry, index) => (
+        {entries.map((entry) => (
             <div key={entry.id}>
                 <h3>{getVehicleName(entry.vehicleId)}</h3>
                 <p>Service: {entry.service}</p>
                 <p>Mileage: {entry.mileage}</p>
                 <p>Cost: ${entry.cost}</p>
-                <button onClick={() => deleteEntry(index)}>Delete Entry</button>
+                <button onClick={() => deleteEntry(entry.id)}>Delete</button>
             </div>
             
         ))}

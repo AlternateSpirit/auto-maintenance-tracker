@@ -1,0 +1,20 @@
+UI additions/fixes list 
+- improve spacing and layout of each page
+- some buttons like "back to garage" feel out of place
+- home page feels barren
+- pictures of vehicle
+- cascading cards or as you scroll vehicles "come into view"
+- can spin vehicle around (have user take 360 video)
+- improve vehicle "landing" page
+
+
+Features ideas:
+    Persistent maintenance notification center
+        - Notification icon remains visible across every page
+        - Shows overdue and upcoming services
+        - User can assign an expected service date
+        - Clicking a reminder opens the related vehicle/service
+        - User can mark it complete
+        - User can dismiss/snooze it temporarily
+        - Snoozed reminder reappears after a defined period
+        - Reminder state persists after refreshing

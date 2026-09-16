@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Home from './components/Home'
 import Garage from './components/Garage'
 import History from './components/History'
@@ -23,31 +23,54 @@ export type Vehicle = {
 }
 
 function App() {
+  //declarations
   const [vehicle, setVehicle] = useState('')
   const [mileage, setMileage] = useState('')
   const [service, setService] = useState('')
   const [cost, setCost] = useState('')
   const [currentPage, setCurrentPage] = useState('home')
-  const [entries, setEntries] = useState<ServiceEntry[]>([])
+  const [entries, setEntries] = useState<ServiceEntry[]>(() => {
+    const savedEntries = localStorage.getItem('serviceEntries')
+    return savedEntries ? JSON.parse(savedEntries) : []
+  })
   const [year, setYear] = useState('')
   const [make, setMake] = useState('')
   const [model, setModel] = useState('')
   const [vehicleMileage, setVehicleMileage] = useState('')
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(null)
 
-  const [vehicles, setVehicles] = useState<Vehicle[]>([
-    {
-      id: 1,
-      year: 2017,
-      make: 'Subaru',
-      model: 'WRX',
-      mileage: 75000
-    }
-  ])
+  const [vehicles, setVehicles] = useState<Vehicle[]>(() => {
+    const savedVehicles = localStorage.getItem('vehicles')
+
+    return savedVehicles
+      ? JSON.parse(savedVehicles)
+      : [
+          {
+            id: 1,
+            year: 2017,
+            make: 'Subaru',
+            model: 'WRX',
+            mileage: 75000,
+          },
+        ]
+  })
 
   const selectedVehicle = vehicles.find(
     (vehicle) => vehicle.id === selectedVehicleId
   )
+
+  const selectedVehicleEntries = entries.filter(
+    (entry) => entry.vehicleId === selectedVehicleId
+  )
+
+  //effects
+  useEffect(() => {
+    localStorage.setItem('serviceEntries', JSON.stringify(entries))
+  }, [entries])
+
+  useEffect(() => {
+    localStorage.setItem('vehicles', JSON.stringify(vehicles))
+  }, [vehicles])
 
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -89,9 +112,9 @@ function App() {
     setVehicleMileage('')
   }
 
-  function deleteEntry(indexToDelete: number) {
+  function deleteEntry(idToDelete: number) {
     setEntries(
-      entries.filter((_, index) => index !== indexToDelete)
+      entries.filter((entry) => entry.id !== idToDelete)
     )
   }
 
@@ -108,6 +131,16 @@ function App() {
 
   function closeVehicle() {
     setCurrentPage('garage')
+  }
+
+  function updateVehicleMileage(vehicleId: number, newMileage: number) {
+    setVehicles((currentVehicles) =>
+      currentVehicles.map((vehicle) =>
+        vehicle.id === vehicleId
+          ? { ...vehicle, mileage: newMileage }
+          : vehicle
+      )
+    )
   }
 
   return (
@@ -153,8 +186,10 @@ function App() {
 
       {currentPage === 'vehicle' && selectedVehicle && (
         <VehicleDetails 
-        vehicle={selectedVehicle} 
+        vehicle={selectedVehicle}
+        entries={selectedVehicleEntries}
         closeVehicle={closeVehicle}
+        updateVehicleMileage={updateVehicleMileage}
         />
       )}
 
