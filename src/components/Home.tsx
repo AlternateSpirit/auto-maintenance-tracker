@@ -1,9 +1,12 @@
+import type { Vehicle } from '../App'
+
 type HomeProps = {
   title: string
   vehicle: string
   mileage: string
   service: string
   cost: string
+  vehicles: Vehicle[]
   setVehicle: (value: string) => void
   setMileage: (value: string) => void
   setService: (value: string) => void
@@ -14,6 +17,7 @@ type HomeProps = {
 function Home({
   title,
   vehicle,
+  vehicles,
   mileage,
   service,
   cost,
@@ -32,11 +36,19 @@ function Home({
         <h2>Want to add a service done?</h2>
 
         <form onSubmit={handleSubmit}>
-          <input
-            placeholder="Make & model"
+          <select
             value={vehicle}
             onChange={(event) => setVehicle(event.target.value)}
-          />
+            required
+          >
+            <option value="">Select a vehicle</option>
+
+            {vehicles.map((vehicleOption) => (
+              <option key={vehicleOption.id} value={vehicleOption.id}>
+                {vehicleOption.year} {vehicleOption.make} {vehicleOption.model}
+              </option>
+            ))}
+          </select>
 
           <input
             placeholder="Mileage"

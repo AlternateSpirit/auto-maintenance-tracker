@@ -7,7 +7,8 @@ import './App.css'
 
 
 export type ServiceEntry = {
-  vehicle: string
+  id: number
+  vehicleId: number
   mileage: string
   service: string
   cost: string
@@ -52,7 +53,8 @@ function App() {
     event.preventDefault()
 
     const newEntry: ServiceEntry = {
-      vehicle,
+      id: Date.now(),
+      vehicleId: Number(vehicle),
       mileage,
       service,
       cost,
@@ -114,6 +116,7 @@ function App() {
         <Home
           title="The Garage"
           vehicle={vehicle}
+          vehicles={vehicles}
           mileage={mileage}
           service={service}
           cost={cost}
@@ -128,6 +131,7 @@ function App() {
       {currentPage === 'history' && (<History 
         entries={entries}
         deleteEntry={deleteEntry}
+        vehicles={vehicles}
         />
       )}
 

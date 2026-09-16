@@ -79,21 +79,26 @@ form {
   gap: 14px;
 }
 
-input {
+input, select {
   width: 100%;
   padding: 13px 14px;
   color: #ffffff;
+  font: inherit;
   background: #20242b;
   border: 1px solid #4a5360;
   border-radius: 10px;
   outline: none;
 }
 
+select {
+  cursor: pointer;
+}
+
 input::placeholder {
   color: #8993a1;
 }
 
-input:focus {
+input:focus, select:focus {
   border-color: #8ec5ff;
   box-shadow: 0 0 0 3px rgba(142, 197, 255, 0.15);
 }
