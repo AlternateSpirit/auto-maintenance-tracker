@@ -38,15 +38,8 @@ Additional backend and database technologies will be added as development progre
 
 ## Project Goals
 
-Garage Log is designed around a simple idea: vehicle maintenance records should be quick to enter and easy to find later.
+The Garage is designed around a simple idea: vehicle maintenance records should be quick to enter and easy to find later.
 
 The application will allow users to maintain a virtual garage containing their vehicles, record maintenance and repairs, track costs and mileage, and view the complete service history of an individual vehicle.
 
-This project is also being developed to explore modern React application architecture, including reusable components, state management, navigation, and eventually persistent backend data.
-
-## Getting Started
-
-Clone the repository:
-
-```bash
-git clone <https://github.com/AlternateSpirit/auto-maintenance-tracker>
+This project is also being developed to explore modern React application architecture, including reusable components, state management, navigation, and eventually persistent back end data.
