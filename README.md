@@ -1,6 +1,6 @@
-# Garage Log 🚗
+# THE GARAGE 🚗
 
-Garage Log is a web-based automotive maintenance tracker designed to make it easy to record, organize, and review vehicle service history.
+The Garage is a web-based automotive maintenance tracker designed to make it easy to record, organize, and review vehicle service history.
 
 The project is currently in active development and is being built as a full-stack portfolio project.
 
