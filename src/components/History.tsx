@@ -1,4 +1,5 @@
 import type { ServiceEntry, Vehicle } from '../App'
+import {formatServiceDate} from '../utils/formatServiceDate'
 
 type HistoryProps = {
   entries: ServiceEntry[]
@@ -32,6 +33,7 @@ function History({
         {entries.map((entry) => (
             <div key={entry.id}>
                 <h3>{getVehicleName(entry.vehicleId)}</h3>
+                <p>Date: {formatServiceDate(entry.date)}</p>
                 <p>Service: {entry.service}</p>
                 <p>Mileage: {entry.mileage}</p>
                 <p>Cost: ${entry.cost}</p>

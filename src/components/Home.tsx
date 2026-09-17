@@ -6,11 +6,14 @@ type HomeProps = {
   mileage: string
   service: string
   cost: string
+  serviceDate: string
+  
   vehicles: Vehicle[]
   setVehicle: (value: string) => void
   setMileage: (value: string) => void
   setService: (value: string) => void
   setCost: (value: string) => void
+  setServiceDate: (value: string) => void
   handleSubmit: (event: React.SubmitEvent<HTMLFormElement>) => void
 }
 
@@ -21,6 +24,8 @@ function Home({
   mileage,
   service,
   cost,
+  serviceDate,
+  setServiceDate,
   setVehicle,
   setMileage,
   setService,
@@ -51,21 +56,36 @@ function Home({
           </select>
 
           <input
+            id="service-date"
+            type="date"
+            value={serviceDate}
+            onChange={(event) => setServiceDate(event.target.value)}
+            required
+          />
+          <input
             placeholder="Mileage"
+            type="number"
+            min="0"
+            step="1"
+            inputMode="numeric"
             value={mileage}
             onChange={(event) => setMileage(event.target.value)}
+            required
           />
-
           <input
             placeholder="Service Performed"
             value={service}
             onChange={(event) => setService(event.target.value)}
           />
-
           <input
             placeholder="Cost"
+            type="number"
+            min="0"
+            step="0.01"
+            inputMode="decimal"
             value={cost}
             onChange={(event) => setCost(event.target.value)}
+            required
           />
 
           <button type="submit">Add Entry</button>
