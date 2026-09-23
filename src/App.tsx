@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useLocalStorage } from './hooks/useLocalStorage'
+import { getReminderStatus } from './utils/getReminderStatus'
 import Home from './components/Home'
 import Garage from './components/Garage'
 import History from './components/History'
 import VehicleDetails from './components/VehicleDetails'
+import NotificationCenter from './components/NotificationCenter'
 import './App.css'
 
 
@@ -55,15 +57,7 @@ function App() {
       (secondEntry.date ?? '').localeCompare(firstEntry.date ?? '')
   )
 
-  const [vehicles, setVehicles] = useLocalStorage<Vehicle[]>('vehicles', [
-    {
-      id: 1,
-      year: 2017,
-      make: 'Subaru',
-      model: 'WRX',
-      mileage: 75000,
-    },
-  ])
+  const [vehicles, setVehicles] = useLocalStorage<Vehicle[]>('vehicles', [])
 
   const selectedVehicle = vehicles.find(
     (vehicle) => vehicle.id === selectedVehicleId
@@ -77,7 +71,56 @@ function App() {
     (reminder) =>
       reminder.vehicleId === selectedVehicleId &&
       !reminder.completed
-  ) 
+  )
+  const today = new Date()
+  const todayString = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, '0'),
+    String(today.getDate()).padStart(2, '0'),
+  ].join('-')
+
+  const notificationReminders = reminders.filter(
+    (reminder) => {
+      if (reminder.completed) {
+        return false
+      }
+
+      const reminderVehicle = vehicles.find(
+        (vehicle) => vehicle.id === reminder.vehicleId
+      )
+
+      if (!reminderVehicle) {
+        return false
+      }
+
+      const status = getReminderStatus(
+        reminder.dueDate,
+        reminder.dueMileage,
+        reminderVehicle.mileage
+      )
+
+      if (
+        reminder.snoozedUntil !== null &&
+        reminder.snoozedUntil > todayString
+      ) {
+        return false
+      }
+
+      return status !== 'upcoming'
+    }
+  )
+
+
+  const notificationCountsByVehicle =
+    notificationReminders.reduce<Record<number, number>>(
+      (counts, reminder) => {
+        counts[reminder.vehicleId] =
+          (counts[reminder.vehicleId] ?? 0) + 1
+
+        return counts
+      },
+      {}
+  )
 
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -213,6 +256,35 @@ function App() {
     )
   }
 
+  function completeReminder(reminderId: number) {
+    setReminders((currentReminders) =>
+      currentReminders.map((reminder) =>
+        reminder.id === reminderId
+          ? { ...reminder, completed: true }
+          : reminder
+      )
+    )
+  }
+
+  function snoozeReminder(reminderId: number) {
+    const snoozedDate = new Date()
+    snoozedDate.setDate(snoozedDate.getDate() + 7)
+
+    const snoozedUntil = [
+      snoozedDate.getFullYear(),
+      String(snoozedDate.getMonth() + 1).padStart(2, '0'),
+      String(snoozedDate.getDate()).padStart(2, '0'),
+    ].join('-')
+
+    setReminders((currentReminders) =>
+      currentReminders.map((reminder) =>
+        reminder.id === reminderId
+          ? { ...reminder, snoozedUntil }
+          : reminder
+      )
+    )
+  }
+
   function addReminder(
     vehicleId: number,
     service: string,
@@ -237,6 +309,13 @@ function App() {
 
   return (
     <div className="app-shell">
+      <NotificationCenter
+        reminders={notificationReminders}
+        vehicles={vehicles}
+        openVehicle={openVehicle}
+        snoozeReminder={snoozeReminder}
+      />
+
       {currentPage === 'home' && (
         <Home
           title="The Garage"
@@ -275,6 +354,7 @@ function App() {
         addVehicle={addVehicle}
         deleteVehicle={deleteVehicle}
         openVehicle={openVehicle}
+        notificationCountsByVehicle={notificationCountsByVehicle}
         />
       )}
 
@@ -286,6 +366,7 @@ function App() {
         updateVehicleMileage={updateVehicleMileage}
         reminders={selectedVehicleReminders}
         addReminder={addReminder}
+        completeReminder={completeReminder}
         />
       )}
 

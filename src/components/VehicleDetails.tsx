@@ -1,12 +1,14 @@
 import {useState} from 'react'
 import type { ServiceEntry, ServiceReminder, Vehicle } from '../App'
 import {formatServiceDate} from '../utils/formatServiceDate'
+import {getReminderStatus} from '../utils/getReminderStatus'
 
 type VehicleDetailsProps = {
   vehicle: Vehicle
   entries: ServiceEntry[]
   reminders: ServiceReminder[]
   closeVehicle: () => void
+  completeReminder: (reminderId: number) => void
   updateVehicleMileage: (vehicleId: number, newMileage: number) => void
   addReminder: (
     vehicleId: number,
@@ -16,10 +18,18 @@ type VehicleDetailsProps = {
   ) => void
 }
 
+const reminderStatusLabels = {
+  upcoming: 'Upcoming',
+  'due-soon': 'Due Soon',
+  'due-now': 'Due Now',
+  overdue: 'Overdue',
+}
+
 function VehicleDetails({ 
   vehicle,
   entries,
   reminders,
+  completeReminder,
   closeVehicle,
   updateVehicleMileage,
   addReminder,
@@ -179,20 +189,43 @@ function VehicleDetails({
         {reminders.length === 0 ? (
           <p>No upcoming maintenance scheduled.</p>
         ) : (
-          reminders.map((reminder) => (
-            <div key={reminder.id}>
-              <h3>{reminder.service}</h3>
-              <p>
-                Expected by: {formatServiceDate(reminder.dueDate)}
-              </p>
+          reminders.map((reminder) => {
+            const status = getReminderStatus(
+              reminder.dueDate,
+              reminder.dueMileage,
+              vehicle.mileage
+            )
 
-              {reminder.dueMileage !== null && (
+            return (
+              <div key={reminder.id}>
+                <h3>{reminder.service}</h3>
+
+                <span className={`reminder-status ${status}`}>
+                  {reminderStatusLabels[status]}
+                </span>
+
+                <button
+                  type="button"
+                  className="complete-reminder-button"
+                  onClick={() => completeReminder(reminder.id)}
+                >
+                  Mark Complete
+                </button>
+
                 <p>
-                  Due at: {reminder.dueMileage.toLocaleString()} miles
+                  Expected by:{' '}
+                  {formatServiceDate(reminder.dueDate)}
                 </p>
-              )}
-            </div>
-          ))
+
+                {reminder.dueMileage !== null && (
+                  <p>
+                    Due at:{' '}
+                    {reminder.dueMileage.toLocaleString()} miles
+                  </p>
+                )}
+              </div>
+            )
+          })
         )}
       </section>
       <section className="card">

@@ -13,6 +13,7 @@ type GarageProps = {
     addVehicle: (event: React.SubmitEvent<HTMLFormElement>) => void
     deleteVehicle: (idToDelete: number) => void
     openVehicle: (vehicleId: number) => void
+    notificationCountsByVehicle: Record<number, number>
 }
 
 function Garage({ 
@@ -21,6 +22,7 @@ function Garage({
     make,
     model,
     vehicleMileage,
+    notificationCountsByVehicle,
     setYear, 
     setMake, 
     setModel, 
@@ -28,6 +30,7 @@ function Garage({
     addVehicle,
     deleteVehicle,
     openVehicle
+    
 
 }: GarageProps) { 
     return (
@@ -69,9 +72,17 @@ function Garage({
                 <h2>Your Vehicles</h2>
                 {vehicles.map((vehicle) => (
                     <div key={vehicle.id}>
-                        <h2>
-                            {vehicle.year} {vehicle.make} {vehicle.model}
-                        </h2>
+                        <div className="vehicle-card-header">
+                            <h2>
+                                {vehicle.year} {vehicle.make} {vehicle.model}
+                            </h2>
+
+                            {(notificationCountsByVehicle[vehicle.id] ?? 0) > 0 && (
+                                <span className="vehicle-notification-count">
+                                {notificationCountsByVehicle[vehicle.id]}
+                                </span>
+                            )}
+                        </div>
                         <p>{vehicle.mileage} miles</p>
                         <div className="vehicle-actions">
                             <button onClick={() => openVehicle(vehicle.id)}>View Vehicle's Details</button>
