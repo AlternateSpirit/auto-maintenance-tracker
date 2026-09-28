@@ -1,45 +1,109 @@
-# THE GARAGE 🚗
+# The Garage 🚗
 
-The Garage is a web-based automotive maintenance tracker designed to make it easy to record, organize, and review vehicle service history.
+A responsive vehicle-maintenance tracker for recording service history, monitoring ownership costs, and staying ahead of upcoming maintenance.
 
-The project is currently in active development and is being built as a full-stack portfolio project.
+**Current release:** `v0.1.0-alpha`  
+**Live application:** [auto-maintenance-tracker.vercel.app](https://auto-maintenance-tracker.vercel.app)
+
+## About
+
+The Garage gives vehicle owners one place to manage their cars, record completed services, update mileage, review maintenance history, and schedule future maintenance reminders.
+
+The project began as a React learning exercise and has grown into a deployed product focused on practical vehicle ownership and maintenance planning.
 
 ## Features
 
-### Currently Implemented
+- Create and manage multiple vehicle profiles
+- Record service date, mileage, work performed, and cost
+- View complete and vehicle-specific maintenance histories
+- Automatically update a vehicle’s current mileage
+- Validate mileage against surrounding service records
+- Calculate total maintenance spending by vehicle
+- Create date- and mileage-based service reminders
+- Classify reminders as upcoming, due soon, due now, or overdue
+- Display global and per-vehicle notification counts
+- Snooze reminders for seven days
+- Mark maintenance reminders as completed
+- Automatically recommend the next service interval for recognized maintenance
+- Save vehicles, records, and reminders between browser sessions
+- Responsive dashboard interface for desktop and mobile
 
-- Add vehicle service records
-- Track service mileage
-- Track maintenance costs
-- Delete service records
-- Multi-page navigation
-- Responsive dashboard-style interface
+## How Recommendations Work
 
-### Planned
+When a recognized maintenance reminder is completed, The Garage checks its service interval catalog and generates the next recommendation.
 
-- Multiple vehicle profiles
-- Individual service histories for each vehicle
-- Vehicle photos and gallery
-- Maintenance history filtering
-- Upcoming maintenance tracking
-- Service reminders
-- Persistent data storage
-- Improved responsive/mobile interface
+For example, completing an oil-change reminder can create another reminder based on:
 
-## Tech Stack
+- The vehicle’s current mileage plus the recommended mileage interval
+- The current date plus the recommended time interval
+
+Unrecognized or one-time repairs can still be tracked without creating unnecessary recurring reminders.
+
+## Technology
 
 - React
 - TypeScript
 - Vite
 - CSS
-- Git / GitHub
+- Browser Local Storage
+- Git and GitHub
+- Vercel
 
-Additional backend and database technologies will be added as development progresses.
+## Run Locally
 
-## Project Goals
+Clone the repository:
 
-The Garage is designed around a simple idea: vehicle maintenance records should be quick to enter and easy to find later.
+```bash
+git clone <your-repository-url>
+cd auto-maintenance-tracker
+```
 
-The application will allow users to maintain a virtual garage containing their vehicles, record maintenance and repairs, track costs and mileage, and view the complete service history of an individual vehicle.
+Install dependencies:
 
-This project is also being developed to explore modern React application architecture, including reusable components, state management, navigation, and eventually persistent back end data.
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+Run the linter:
+
+```bash
+npm run lint
+```
+
+## Alpha Release
+
+`v0.1.0-alpha` is the first deployed, usable version of The Garage.
+
+Data is currently stored in the user’s browser through Local Storage. This means records persist after refreshing or closing the application, but they do not yet synchronize between browsers or devices.
+
+## Roadmap
+
+- User accounts and authentication
+- Cloud database and cross-device synchronization
+- Backend API
+- Vehicle photos
+- Improved mobile layout
+- Maintenance-history searching and filtering
+- Custom service intervals
+- Expanded vehicle-specific recommendations
+- Data export and backup
+- Completed-reminder history
+- Settings and user preferences
+
+## Project Direction
+
+The Garage is being developed as a real, evolving product rather than a static demonstration. The goal is to create a dependable digital garage that makes automotive maintenance easier to understand, organize, and plan with your phone or computer. 
+
+Future releases will move persistence from browser storage to authenticated cloud data while keeping the application simple and useful for everyday vehicle owners.
