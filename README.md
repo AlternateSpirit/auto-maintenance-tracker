@@ -4,6 +4,7 @@ A responsive vehicle-maintenance tracker for recording service history, monitori
 
 **Current release:** `v0.1.0-alpha`  
 **Live application:** [auto-maintenance-tracker.vercel.app](https://auto-maintenance-tracker.vercel.app)
+<img width="2555" height="1262" alt="theGarage0 1 0" src="https://github.com/user-attachments/assets/1a739855-7cb0-4c48-948a-5fd58dee363f" />
 
 ## About
 
