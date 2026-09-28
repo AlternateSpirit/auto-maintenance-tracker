@@ -70,26 +70,36 @@ function Garage({
             </section>
             <section className="card">
                 <h2>Your Vehicles</h2>
-                {vehicles.map((vehicle) => (
-                    <div key={vehicle.id}>
-                        <div className="vehicle-card-header">
-                            <h2>
-                                {vehicle.year} {vehicle.make} {vehicle.model}
-                            </h2>
-
-                            {(notificationCountsByVehicle[vehicle.id] ?? 0) > 0 && (
-                                <span className="vehicle-notification-count">
-                                {notificationCountsByVehicle[vehicle.id]}
-                                </span>
-                            )}
-                        </div>
-                        <p>{vehicle.mileage} miles</p>
-                        <div className="vehicle-actions">
-                            <button onClick={() => openVehicle(vehicle.id)}>View Vehicle's Details</button>
-                            <button onClick={() => deleteVehicle(vehicle.id)}>Delete Vehicle</button>
-                        </div>
+                {vehicles.length === 0 ? (
+                    <div className="empty-state">
+                        <h3>Your garage is empty</h3>
+                        <p>
+                        Add your first vehicle above to begin tracking
+                        maintenance and service reminders.
+                        </p>
                     </div>
-                ))}    
+                ) : (
+                    vehicles.map((vehicle) => (
+                        <div key={vehicle.id}>
+                            <div className="vehicle-card-header">
+                                <h2>
+                                    {vehicle.year} {vehicle.make} {vehicle.model}
+                                </h2>
+
+                                {(notificationCountsByVehicle[vehicle.id] ?? 0) > 0 && (
+                                    <span className="vehicle-notification-count">
+                                    {notificationCountsByVehicle[vehicle.id]}
+                                    </span>
+                                )}
+                            </div>
+                            <p>{vehicle.mileage} miles</p>
+                            <div className="vehicle-actions">
+                                <button onClick={() => openVehicle(vehicle.id)}>View Vehicle's Details</button>
+                                <button onClick={() => deleteVehicle(vehicle.id)}>Delete Vehicle</button>
+                            </div>
+                        </div>
+                    ))
+                )}  
             </section>
         </div>
     )

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useLocalStorage } from './hooks/useLocalStorage'
 import { getReminderStatus } from './utils/getReminderStatus'
+import { findServiceInterval } from './utils/findServiceInterval'
 import Home from './components/Home'
 import Garage from './components/Garage'
 import History from './components/History'
@@ -257,13 +258,61 @@ function App() {
   }
 
   function completeReminder(reminderId: number) {
-    setReminders((currentReminders) =>
-      currentReminders.map((reminder) =>
-        reminder.id === reminderId
-          ? { ...reminder, completed: true }
-          : reminder
-      )
+    const completedReminder = reminders.find(
+      (reminder) =>
+        reminder.id === reminderId && !reminder.completed
     )
+
+    if (!completedReminder) {
+      return
+    }
+
+    const updatedReminders = reminders.map((reminder) =>
+      reminder.id === reminderId
+        ? { ...reminder, completed: true }
+        : reminder
+    )
+
+    const interval = findServiceInterval(
+      completedReminder.service
+    )
+
+    const reminderVehicle = vehicles.find(
+      (vehicle) =>
+        vehicle.id === completedReminder.vehicleId
+    )
+
+    if (!interval || !reminderVehicle) {
+      setReminders(updatedReminders)
+      return
+    }
+
+    const nextDueDate = new Date()
+    nextDueDate.setMonth(
+      nextDueDate.getMonth() + interval.monthInterval
+    )
+
+    const formattedDueDate = [
+      nextDueDate.getFullYear(),
+      String(nextDueDate.getMonth() + 1).padStart(2, '0'),
+      String(nextDueDate.getDate()).padStart(2, '0'),
+    ].join('-')
+
+    const nextReminder: ServiceReminder = {
+      id: Date.now(),
+      vehicleId: completedReminder.vehicleId,
+      service: interval.service,
+      dueDate: formattedDueDate,
+      dueMileage:
+        reminderVehicle.mileage + interval.mileageInterval,
+      snoozedUntil: null,
+      completed: false,
+    }
+
+    setReminders([
+      ...updatedReminders,
+      nextReminder,
+    ])
   }
 
   function snoozeReminder(reminderId: number) {
