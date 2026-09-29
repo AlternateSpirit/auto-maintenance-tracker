@@ -1,11 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Sekuya&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap");
 :root {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  color: #ffffff;
-  background: #20242b;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  font-family: "Manrope", sans-serif;
+  color: var(--color-text);
+  background: var(--color-background);
 }
 
 * {
@@ -16,7 +13,25 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #20242b;
+  color: var(--color-text);
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      var(--glow-blue),
+      transparent 38rem
+    ),
+    radial-gradient(
+      circle at 85% 35%,
+      var(--glow-violet),
+      transparent 42rem
+    ),
+    linear-gradient(
+      145deg,
+      #111821 0%,
+      #182330 48%,
+      #101720 100%
+    );
+  background-attachment: fixed;
 }
 
 button,

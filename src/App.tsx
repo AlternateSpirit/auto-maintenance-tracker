@@ -7,6 +7,7 @@ import Garage from './components/Garage'
 import History from './components/History'
 import VehicleDetails from './components/VehicleDetails'
 import NotificationCenter from './components/NotificationCenter'
+import Settings from './components/Settings'
 import './App.css'
 
 
@@ -356,6 +357,45 @@ function App() {
     ])
   }
 
+  function exportData() {
+    const backup = JSON.stringify(
+      {
+        version: '0.1.1',
+        exportedAt: new Date().toISOString(),
+        vehicles,
+        entries,
+        reminders,
+      },
+      null,
+      2
+    )
+
+    const backupFile = new Blob([backup], {
+      type: 'application/json',
+    })
+    const downloadUrl = URL.createObjectURL(backupFile)
+    const downloadLink = document.createElement('a')
+
+    downloadLink.href = downloadUrl
+    downloadLink.download = `the-garage-backup-${todayString}.json`
+    downloadLink.click()
+    URL.revokeObjectURL(downloadUrl)
+  }
+
+  function clearAllData() {
+    const shouldClearData = window.confirm(
+      'Clear every vehicle, service record, and reminder from this browser? This cannot be undone.'
+    )
+
+    if (!shouldClearData) return
+
+    setVehicles([])
+    setEntries([])
+    setReminders([])
+    setSelectedVehicleId(null)
+    setCurrentPage('home')
+  }
+
   return (
     <div className="app-shell">
       <NotificationCenter
@@ -367,9 +407,11 @@ function App() {
 
       {currentPage === 'home' && (
         <Home
-          title="The Garage"
+          title="Service Bay"
           vehicle={vehicle}
           vehicles={vehicles}
+          entries={entries}
+          reminders={reminders}
           mileage={mileage}
           service={service}
           cost={cost}
@@ -380,6 +422,8 @@ function App() {
           handleSubmit={handleSubmit}
           setServiceDate={setServiceDate}
           serviceDate={serviceDate}
+          openGarage={() => setCurrentPage('garage')}
+          openVehicle={openVehicle}
         />
       )}
 
@@ -419,7 +463,12 @@ function App() {
         />
       )}
 
-      {currentPage === 'settings' && <h1>Settings</h1>}
+      {currentPage === 'settings' && (
+        <Settings
+          exportData={exportData}
+          clearAllData={clearAllData}
+        />
+      )}
 
       <nav>
         <button className={currentPage === 'home' ? 'active' : ' '}onClick={() => setCurrentPage('home')}>Home</button>
