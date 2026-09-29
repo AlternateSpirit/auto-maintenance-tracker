@@ -188,7 +188,7 @@ function Home({
               <span className="eyebrow">Maintenance plan</span>
               <h2>What’s coming up</h2>
               <p className="section-description">
-                Your closest active reminders across the garage.
+                Your closest active reminders across Service Bay.
               </p>
 
               {upcomingReminders.length === 0 ? (

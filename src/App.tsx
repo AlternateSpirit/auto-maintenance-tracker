@@ -377,7 +377,7 @@ function App() {
     const downloadLink = document.createElement('a')
 
     downloadLink.href = downloadUrl
-    downloadLink.download = `the-garage-backup-${todayString}.json`
+    downloadLink.download = `service-bay-backup-${todayString}.json`
     downloadLink.click()
     URL.revokeObjectURL(downloadUrl)
   }

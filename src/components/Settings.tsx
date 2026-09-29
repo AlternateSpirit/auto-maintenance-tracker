@@ -42,7 +42,7 @@ function Settings({ exportData, clearAllData }: SettingsProps) {
         <span className="eyebrow">Alpha release</span>
         <h2>Cloud sync is coming next</h2>
         <p>
-          The Garage currently keeps data on this device. Accounts and secure
+          Service Bay currently keeps data on this device. Accounts and secure
           cross-device storage are planned for a future release.
         </p>
       </section>

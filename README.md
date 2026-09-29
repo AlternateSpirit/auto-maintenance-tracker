@@ -1,4 +1,4 @@
-# The Garage 🚗
+# Service Bay 🚗
 
 A responsive vehicle-maintenance tracker for recording service history, monitoring ownership costs, and staying ahead of upcoming maintenance.
 
@@ -8,7 +8,7 @@ A responsive vehicle-maintenance tracker for recording service history, monitori
 
 ## About
 
-The Garage gives vehicle owners one place to manage their cars, record completed services, update mileage, review maintenance history, and schedule future maintenance reminders.
+Service Bay gives vehicle owners one place to manage their cars, record completed services, update mileage, review maintenance history, and schedule future maintenance reminders.
 
 The project began as a React learning exercise and has grown into a deployed product focused on practical vehicle ownership and maintenance planning.
 
@@ -31,7 +31,7 @@ The project began as a React learning exercise and has grown into a deployed pro
 
 ## How Recommendations Work
 
-When a recognized maintenance reminder is completed, The Garage checks its service interval catalog and generates the next recommendation.
+When a recognized maintenance reminder is completed, Service Bay checks its service interval catalog and generates the next recommendation.
 
 For example, completing an oil-change reminder can create another reminder based on:
 
@@ -85,7 +85,7 @@ npm run lint
 
 ## Alpha Release
 
-`v0.1.0-alpha` is the first deployed, usable version of The Garage.
+`v0.1.0-alpha` is the first deployed, usable version of Service Bay.
 
 Data is currently stored in the user’s browser through Local Storage. This means records persist after refreshing or closing the application, but they do not yet synchronize between browsers or devices.
 
@@ -105,6 +105,6 @@ Data is currently stored in the user’s browser through Local Storage. This mea
 
 ## Project Direction
 
-The Garage is being developed as a real, evolving product rather than a static demonstration. The goal is to create a dependable digital garage that makes automotive maintenance easier to understand, organize, and plan with your phone or computer. 
+Service Bay is being developed as a real, evolving product rather than a static demonstration. The goal is to create a dependable digital garage that makes automotive maintenance easier to understand, organize, and plan with your phone or computer. 
 
 Future releases will move persistence from browser storage to authenticated cloud data while keeping the application simple and useful for everyday vehicle owners.
